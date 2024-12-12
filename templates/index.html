@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Recipe Manager{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1>Welcome to Recipe Manager</h1>
+        <p class="lead">Discover, share, and enjoy delicious recipes from around the world!</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col">
+        <h2>Popular Categories</h2>
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('search', category='Main Course') }}" class="btn btn-outline-primary">Main Course</a>
+            <a href="{{ url_for('search', category='Dessert') }}" class="btn btn-outline-primary">Dessert</a>
+            <a href="{{ url_for('search', category='Appetizer') }}" class="btn btn-outline-primary">Appetizer</a>
+            <a href="{{ url_for('search', category='Vegetarian') }}" class="btn btn-outline-primary">Vegetarian</a>
+        </div>
+    </div>
+</div>
+
+<h2>Latest Recipes</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for recipe in recipes %}
+    <div class="col">
+        <div class="card h-100 recipe-card">
+            {% if recipe.image_url %}
+            <img src="{{ recipe.image_url }}" class="card-img-top" alt="{{ recipe.title }}">
+            {% else %}
+            <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                <i class="fas fa-utensils fa-3x"></i>
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">{{ recipe.description[:100] }}...</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="star-rating">
+                        {% for _ in range(recipe.average_rating|default(0)|int) %}
+                        <i class="fas fa-star"></i>
+                        {% endfor %}
+                    </div>
+                    <small class="text-muted">{{ recipe.cooking_time }} mins</small>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}" class="btn btn-primary">View Recipe</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
