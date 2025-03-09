@@ -1,1 +1,4 @@
 pwd
+.env
+._*
+.DS_Store

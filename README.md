@@ -71,3 +71,38 @@ A web application for managing and sharing cooking recipes built with Flask and 
 3. Commit your changes
 4. Push to the branch
 5. Create a new Pull Request
+
+graph TD
+    A[User] --> B[Home Page '/']
+    B --> C[Supabase 'recipes' table]
+    
+    A --> D[Recipe Detail '/recipe/:id']
+    D --> E[Supabase 'recipes' table]
+    D --> F[Supabase 'reviews' table]
+    
+    A --> G[Search '/search']
+    G --> |Query & Category Filter| H[Supabase 'recipes' table]
+    
+    A --> I[Add Review '/review/:recipe_id']
+    I --> |POST| J[Supabase 'reviews' table]
+    
+    %% Data flow for Home
+    C --> |Return recipes| B
+    
+    %% Data flow for Recipe Detail
+    E --> |Return recipe data| D
+    F --> |Return reviews| D
+    
+    %% Data flow for Search
+    H --> |Return filtered recipes| G
+    
+    %% Data flow for Reviews
+    J --> |Redirect to| D
+
+    %% Styling
+    classDef page fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef database fill:#bbf,stroke:#333,stroke-width:2px;
+    
+    class B,D,G,I page;
+    class C,E,F,H,J database;
+
