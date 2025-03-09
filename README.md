@@ -72,6 +72,7 @@ A web application for managing and sharing cooking recipes built with Flask and 
 4. Push to the branch
 5. Create a new Pull Request
 
+```mermaid
 graph TD
     A[User] --> B[Home Page '/']
     B --> C[Supabase 'recipes' table]
@@ -105,4 +106,4 @@ graph TD
     
     class B,D,G,I page;
     class C,E,F,H,J database;
-
+```
